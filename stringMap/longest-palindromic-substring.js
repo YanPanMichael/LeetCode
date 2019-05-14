@@ -21,3 +21,5 @@ var longestPalindrome = function(s) { //expand around center
   }
   return s.substring(Math.ceil(start),end+1);
 };
+
+console.log(longestPalindrome('babad'));
