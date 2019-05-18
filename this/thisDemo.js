@@ -83,3 +83,22 @@ var obj = {
 
 obj.foo() // {foo: ƒ, bar: ƒ}
 obj.bar() // window
+
+function fn() {
+  console.log('real', this);
+  var arr = [1,2,3];
+  arr.map(function(item) {
+    console.log('--',this.process.title);
+    return item;
+  });
+  arr.map(function(item) {
+    console.log('++',this.process.title);
+    return item;
+  }.bind(this));
+  arr.map((item) => {
+    console.log('=>',this.process.title);
+    return item;
+  });
+}
+// fn();
+fn.call({process: {title: '100'}});
