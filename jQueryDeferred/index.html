@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Deferred</title>
+  </head>
+  <body>
+    <p>Deferred</p>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function waitHandle() {
+        var did = $.Deferred();
+        function wait(did) {
+          var task = function() {
+            console.log('task doing');
+            did.resolve();
+            // did.reject();
+          }
+          setTimeout(task, 1000);
+          // return did;
+          return did.promise();
+        }
+        return wait(did);
+      }
+      var w = waitHandle();
+      // w.reject();
+      $.when(w).then(function (){
+        console.log('success1');
+      }, function() {
+        console.log('error1');
+      }).then(function (){
+        console.log('success2');
+      }, function() {
+        console.log('error2');
+      }).then(function (){
+        console.log('success3');
+      }, function() {
+        console.log('error3');
+      })
+    </script>
+  </body>
+</html>
