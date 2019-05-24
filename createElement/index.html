@@ -70,6 +70,24 @@
       return elem;
     }
     console.log(createElement(data))
+
+    function updateChildren(vnode, newVnode) {
+      var children = vnode.children || [];
+      var newChildren = newVnode.children || [];
+
+      children.forEach(function(child, index) {
+        var newChild = newChildren[index]
+        if(newChild == null) {
+          return null;
+        }
+        if(child.tag === newChild.tag) {
+          updateChildren(child, newChild);
+        } else {
+          replaceNode(child, newChild);
+        }
+      });
+      return elem;
+    }
   </script>
 </body>
 </html>
