@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>createElement</title>
+</head>
+<body>
+  <script>
+    var data = {
+      tag: 'ul',
+      attrs: {id: 'list'},
+      children: [{
+        tag: 'li',
+        attrs: {className: 'item'},
+        children: ['Item 1']
+      }, {
+        tag: 'li',
+        attrs: {className: 'item'},
+        children: ['Item 2']
+      }]
+    }
+    var dataNew = {
+      tag: 'ul',
+      attrs: {id: 'list'},
+      children: [{
+        tag: 'li',
+        attrs: {className: 'item'},
+        children: ['Item 1']
+      }, {
+        tag: 'li',
+        attrs: {className: 'item'},
+        children: ['Item 222']
+      }, {
+        tag: 'li',
+        attrs: {className: 'item'},
+        children: ['Item 3']
+      }, {
+        tag: 'li',
+        attrs: {className: 'item'},
+        children: [{
+          tag: 'li',
+          attrs: {className: 'item'},
+          children: ['Item 41']
+        }, {
+          tag: 'li',
+          attrs: {className: 'item'},
+          children: ['Item 42']
+        }]
+      }]
+    }
+    function createElement(vnode) {
+      var tag = vnode.tag;
+      var attrs = vnode.attrs || {};
+      var children = vnode.children || [];
+      if(!tag) {
+        return null;
+      }
+      var elem = document.createElement(tag);
+      var attrName
+      for(attrName in attrs) {
+        if(attrs.hasOwnProperty(attrName)) {
+          elem.setAttribute(attrName, attrs[attrName]);
+        }
+      }
+      children.forEach(function(child) {
+        elem.appendChild(createElement(child));
+      });
+      return elem;
+    }
+    console.log(createElement(data))
+  </script>
+</body>
+</html>
