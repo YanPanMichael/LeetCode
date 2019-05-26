@@ -54,19 +54,18 @@ $.ajax({
 
 //不使用new指向window
 function Person(name) {
-  console.log(this) // window
-  this.name = name;
-}
-Person('inwe');
-
-//使用new
-function Person(name) {
   self = this
   this.name = name
   console.log(this) //people
+  console.log(self) //people
+}
+Person.prototype.aaa = function() {
+  console.log('prototype', this);
 }
 var people = new Person('iwen')
+console.log(people);
 console.log(self === people) //true
+console.log(people.aaa());
 //这里new改变了this指向，将this由window指向Person的实例对象people
 
 
@@ -102,3 +101,27 @@ function fn() {
 }
 // fn();
 fn.call({process: {title: '100'}});
+
+ // 5. proptype
+ function Elem(id) {
+  this.elem = document.getElementById(id);
+  console.log(this, this.elem); // e1, e1.elem ///DOM element
+}
+
+Elem.prototype.html = function(val) {
+  var elem = this.elem;
+  if (val) {
+    elem.innerHTML = val;
+  }
+  return this;
+}
+Elem.prototype.on = function() {
+  console.log('on', this); // e1
+  this.elem.addEventListener('click', function() {
+    console.log('click', this); // e1.elem ///DOM element
+  })
+}
+
+var e1 = new Elem('a');
+e1.html("new Test");
+e1.on();
