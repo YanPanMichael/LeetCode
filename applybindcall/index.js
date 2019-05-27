@@ -30,13 +30,15 @@ fn1()
 
 function fn3() {
   var age = 16;
+  console.log('3', this)
   return function () {
     console.log(age)
+    console.log('4', this)
   }
 }
-var n3 = fn3();
+var n3 = fn3(); //this === window
 var age = 20;
-n3(); // 16
+n3(); // 16 this===window
 
 var fn4 = (function() {
   var age = 16;
