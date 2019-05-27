@@ -44,12 +44,24 @@ function Dijkstra(matrix, start = 0) {
 const MAX_INTEGER = Infinity;//没有边或者有向图中无法到达
 const MIN_INTEGER = 0;//没有自环
  
-const matrix = [
-    [MIN_INTEGER, 9, 2, MAX_INTEGER, 6],
-    [9, MIN_INTEGER, 3, MAX_INTEGER, MAX_INTEGER],
-    [2, 3, MIN_INTEGER, 5, MAX_INTEGER],
-    [MAX_INTEGER, MAX_INTEGER, 5, MIN_INTEGER, 1],
-    [6, MAX_INTEGER, MAX_INTEGER, 1, MIN_INTEGER]
+const matrix1 = [
+  [MIN_INTEGER, 9, 2, MAX_INTEGER, 6],
+  [9, MIN_INTEGER, 3, MAX_INTEGER, MAX_INTEGER],
+  [2, 3, MIN_INTEGER, 5, MAX_INTEGER],
+  [MAX_INTEGER, MAX_INTEGER, 5, MIN_INTEGER, 1],
+  [6, MAX_INTEGER, MAX_INTEGER, 1, MIN_INTEGER]
+];
+const matrix2 = [
+  [0, 1, 5, 65535, 65535, 65535, 65535, 65535, 65535],
+  [1, 0, 3, 7, 5, 65535, 65535, 65535, 65535],
+  [5, 3, 0, 65535, 1, 7, 65535, 65535, 65535],
+  [65535, 7, 65535, 0, 2, 65535, 3, 65535, 65535],
+  [65535, 5, 1, 2, 0, 3, 6, 9, 65535],
+  [65535, 65535, 7, 65535, 3, 0, 65535, 5, 65535],
+  [65535, 65535, 65535, 3, 6, 65535, 0, 2, 7],
+  [65535, 65535, 65535, 65535, 9, 5, 2, 0, 4],
+  [65535, 65535, 65535, 65535, 65535, 65535, 7, 4, 0],
 ];
 
-console.log(Dijkstra(matrix, 0));
+console.log('matrix1: ', Dijkstra(matrix1, 0));
+console.log('matrix2: ', Dijkstra(matrix2, 2));
