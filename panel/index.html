@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <style>
+    .panel {
+      position: absolute;
+      left: 0;
+      top: 40px;
+      width: 200px;
+      height: 300px;
+      border: 1px solid #aaa;
+      overflow: hidden;
+      display: none;
+    }
+  </style>
+  <session id="alert">
+    <button type="button" class="alert-btn" id="alert-model-btn">alert</button>
+    <div class="panel" id="alert-panel"></div>
+  </session>
+  <script>
+    var albtn = document.getElementById("alert-model-btn");
+    var alpanel = document.getElementById("alert-panel");
+    var alt = document.getElementById("alert");
+
+    albtn.addEventListener('click', function() {
+      if (!alpanel.state) {
+        alpanel.style.display = "block";
+        alpanel.state = 1;
+      } else {
+        alpanel.style.display = "none";
+        alpanel.state = 0;
+      }
+    });
+    alt.addEventListener('blur', function() {
+      alpanel.style.display = 'none';
+      alpanel.state = 0;
+    }, true);
+  </script>
+</body>
+</html>
