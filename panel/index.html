@@ -51,7 +51,7 @@
     var alarea = document.getElementById("alert-area");
 
     alt.addEventListener('blur', (event) => myBlurFunction(event), true);
-    alpanel.addEventListener('focus', (event) => myFocusFunction(event), true);
+
     albtn.addEventListener('click', function() {
       if (!alpanel.state) {
         alpanel.style.display = "block";
@@ -62,18 +62,9 @@
       }
     });
 
-    function myFocusFunction(event) {
-      alpanel.style.display = 'block';
-      alpanel.state = 1;
-    }
-
     function myBlurFunction(event) {
-      var curr = event.currentTarget;
       setTimeout(() => {
-        if(document.activeElement.className.match(/group/)) {
-          alpanel.focus();
-        }
-        if(!curr.contains(document.activeElement)) {
+        if(document.activeElement.tagName === "BODY") {
           alpanel.style.display = 'none';
           alpanel.state = 0;
         }
