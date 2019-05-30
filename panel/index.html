@@ -18,10 +18,21 @@
       overflow: hidden;
       display: none;
     }
+    .btn-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   </style>
   <session id="alert">
     <button type="button" class="alert-btn" id="alert-model-btn">alert</button>
-    <div class="panel" id="alert-panel"></div>
+    <div class="panel" id="alert-panel">
+      <input type="text" class=""/>
+      <div class="btn-group">
+        <button type="reset">Reset</button>
+        <button type="submit">Submit</button>
+      </div>
+    </div>
   </session>
   <script>
     var albtn = document.getElementById("alert-model-btn");
@@ -37,10 +48,13 @@
         alpanel.state = 0;
       }
     });
-    alt.addEventListener('blur', function() {
-      alpanel.style.display = 'none';
-      alpanel.state = 0;
-    }, true);
+    alt.addEventListener('blur', function(event) {
+      event.stopPropagation();
+      alpanel.focus(function() {
+        alpanel.style.display = 'none';
+        alpanel.state = 0;
+      });
+    }.bind(this), true);
   </script>
 </body>
 </html>
