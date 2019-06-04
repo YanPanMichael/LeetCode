@@ -65,7 +65,7 @@ Person.prototype.aaa = function() {
 var people = new Person('iwen')
 console.log(people);
 console.log(self === people) //true
-console.log(people.aaa());
+console.log(people.aaa()); // people
 //这里new改变了this指向，将this由window指向Person的实例对象people
 
 

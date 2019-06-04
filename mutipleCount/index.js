@@ -14,7 +14,7 @@ function getUpper(arr, key){
             high = mid - 1;  
         }
         mid = Math.round((low + high) / 2);
-                   } 
+    } 
 	// 返回最后出现位置 
     return high; 
 }
