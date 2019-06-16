@@ -20,3 +20,44 @@
   </script>
 </body>
 </html>
+
+
+// var bb = document.getElementById('a').getElementsByTagName('div')
+// XML DOM HTMLCollection 对象
+// DOM Event
+// DOM HTMLDocument
+// HTMLCollection 对象
+// HTMLCollection 是一个接口，表示 HTML 元素的集合，它提供了可以遍历列表的方法和属性。
+
+// HTML DOM 中的 HTMLCollection 是“活”的；如果基本的文档改变时，那些改变通过所有 HTMLCollection 对象会立即显示出来。
+
+// 下面的每个项目（以及它们指定的属性）都返回 HTMLCollection：
+
+// Document (images, applets, links, forms, anchors)
+// form (elements)
+// map (areas)
+// select (options)
+// table (rows, tBodies)
+// tableSection (rows)
+// row (cells)
+// HTMLDocument 接口的许多属性都是 HTMLCollection 对象，它提供了访问诸如表单、图像和链接等文档元素的便捷方式。form.elements 和 select.options 都是 HTMLCollection 对象。HTMLCollection 还提供了遍历 Table 的各行以及 TableRow 的各个单元格的一种方便方法。
+
+// 在上面已经提到了，HTMLCollection 对象是带有方法的 HTML 元素的集合，用它可以通过元素在文档中的位置或它们的 id 属性、name 属性获取元素。在 JavaScript 中，HTMLCollection 对象的行为和只读数组一样，可以使用 JavaScript 的方括号，通过编号或名称索引一个 HTMLCollection 对象，而不必调用 item() 方法和 namedItem() 方法。
+
+// HTMLCollection 对象是只读的，不能给它添加新元素，即使采用 JavaScript 数组语法也是如此。
+
+// HTMLCollection 对象和 NodeList 对象很相似，但前者可能既能用名称索引也能用数字索引。
+
+// HTMLCollection 对象的属性
+// 属性	描述
+// cssRules	只读属性，返回指示列表长度的整数（即集合中的元素数）。
+// HTMLCollection 对象的方法
+// 方法	描述
+// item()	返回集合中指定位置的元素（节点）。
+// namedItem()	返回集合中 name 属性或 id 属性具有指定值的元素（节点）。
+// 实例
+// var c = document.forms;		//这是 form 元素的一个 HTMLCollection 对象
+// var firstform = c[0];		//能够以数字数组来使用
+// var lastform = c[c.length-1];	//length 属性返回元素数
+// var address = c["address"];		//能够以关联数组来使用
+// var address = c.address;		//JavaScript 允许这样的表示法
