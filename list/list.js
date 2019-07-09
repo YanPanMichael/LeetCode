@@ -44,7 +44,32 @@ function list() {
     get: () => {
       return this.dataScore;
     },
-    
+    front: () => {
+      this.pos = 0
+    },
+    end: () => {
+      this.pos = this.listSize -1;
+    },
+    prev: () => {
+      --this.pos;
+    },
+    next: () => {
+      if(this.pos < this.listSize) {
+        ++this.pos;
+      }
+    },
+    moveTo: (position) => {
+      return this.pos = position; 
+    },
+    getElement: () => {
+      this.dataScore[this.pos]
+    },
+    hasNext: () => {
+      this.pos < this.listSize;
+    },
+    hasPrev: () => {
+      this.pos >= 0;
+    }
   }
 };
 
