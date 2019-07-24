@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Sender - window.postMessage()跨域消息传递</title>
+</head>
+<body>
+<div>
+    <input id="text" type="text" value="42度空间" />
+    <button id="send" >发送消息</button>
+</div>
+<iframe id="receiver" src="http://localhost:8000/receiver.html" width="500" height="60">
+    <p>你的浏览器不支持IFrame。</p>
+</iframe>
+<script>
+    window.onload = function() {
+        var receiver = document.getElementById('receiver').contentWindow;
+        var btn = document.getElementById('send');
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            var val = document.getElementById('text').value;
+            receiver.postMessage("Hello "+val+"！", "http://localhost:8000");
+        });
+    }
+</script>
+</body>
+</html>
