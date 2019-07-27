@@ -3,35 +3,56 @@
  * @param {number} target
  * @return {number}
  */
-var threeSumClosest = function (nums, target) {
-  const len = nums.length;
-  if (len < 3) {
-      return null;
-  }
-  nums.sort((a, b) => a - b);
-  // 结果，比存储 sum 方便，下面对比时不用再用 target - sum 对比
-  let res = target - (nums[0] + nums[1] + nums[2]);
-  for (let i = 0; i < len - 2; i++) {
-      // 左指针为 i+1，右指针为 nums.length - 1
-      let left = i + 1,
-          right = len - 1;
 
-      while (left < right) {
-          const sum = nums[i] + nums[left] + nums[right];
-          if (sum === target) {
-              return sum;
-          } else if (sum < target) {
-              // sum < target 时，left++
-              while (nums[left] === nums[++left]);
-          } else {
-              // sum > target时，right--
-              while (nums[right] === nums[--right]);
-          }
-          // 存储与 target 最近的值
-          if (Math.abs(sum - target) < Math.abs(res)) {
-              res = target - sum;
-          }
-      }
-  }
-  return target - res;
+var threeSumClosest = function (num, target) {
+    num = num.sort((a, b) => a - b)
+    let len = num.length;
+    let result = []
+    let closestSum = null
+	 
+	  for (let i = 0; i < len - 2; i++) {
+        let j = i + 1;
+        let k = len - 1;
+        let a = num[i]
+        if (i > 0 && num[i] === num[i - 1]) continue;
+
+        while (j < k) {
+            let b = num[j];
+            let c = num[k];
+            let sum = a + b + c;
+            if (closestSum == null) {
+                closestSum = sum
+            }
+            if (sum === target) {
+                closestSum = sum
+                result = [num[i], num[j], num[k]]
+                break
+            }
+
+            if (findUnit(target, sum) < findUnit(target, closestSum)) {
+                closestSum = sum
+                result = [num[i], num[j], num[k]]
+            }
+            if (sum <= target) {
+                while (num[j] === num[j + 1]) j++;
+                j++;
+            }
+            if (sum >= target) {
+                while (num[k] === num[k - 1]) k--;
+                k--;
+            }
+        }
+    }
+    return {closestSum, result}
 };
+function findUnit(a, b) {
+
+    let sum = a - b
+    if (sum < 0) {
+        sum = sum * -1
+    }
+    return sum
+}
+
+var nums = [-1, 2, 1, -4], target = 1;
+console.log(threeSumClosest(nums, target))
