@@ -14,6 +14,8 @@ class Solution {
   longestPalindrome(s) {
     const size = s.length;
     if (size <= 1) return s;
+    //if (size > 1000) s = s.substr(0, 1000);
+    if (size > 1000) throw new CommonException('您的代码出错啦', 1);
     
     let dp = this.matrixCreate(size, size, false);
     let longest_l = 1;
@@ -37,4 +39,10 @@ class Solution {
 }
 
 var test = new Solution();
-console.log(test.longestPalindrome('aecabacaadef'));
+//console.log(test.longestPalindrome('aecabacaadef'));
+
+var str = "";
+for (var i = 0; i < 1000; i++) {
+  str += "a";
+}
+console.log(test.longestPalindrome(str));
