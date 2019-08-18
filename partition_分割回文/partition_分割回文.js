@@ -29,7 +29,7 @@ function dfs(source, result, startIndex) {
       result.push(substr);
       dfs(source, result, i+1);
       result.pop();
-      // result.splice(result.length-1, 1);
+      // result.splice(result.length-1, 1);d d d w
     }
   }
 }
