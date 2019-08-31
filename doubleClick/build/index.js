@@ -61,4 +61,3 @@ var DoubleClick = function (_Component) {
 }(_react.Component);
 
 _reactDom2.default.render(_react2.default.createElement(DoubleClick, null), document.getElementById('root'));
-//# sourceMappingURL=index.js.map
