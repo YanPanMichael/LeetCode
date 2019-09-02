@@ -27,7 +27,7 @@ const flatten4 = arr => {
 }
 console.log('flatten4', flatten4(arr));
 
-//扩展运算符 while some
+//扩展运算符 while some concat
 const flatten5 = arr => {
   while(arr.some(item => Array.isArray(item))) {
     arr = [].concat(...arr);
