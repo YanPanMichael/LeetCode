@@ -6,8 +6,8 @@ setTimeout(function() {
     //     console.log('3');
     // })
     new Promise(function(resolve) {
-        console.log('4');
         resolve();
+        console.log('4');
     }).then(function() {
         console.log('5')
     })
@@ -17,8 +17,8 @@ setTimeout(function() {
 //     console.log('6');
 // })
 new Promise(function(resolve) {
-    console.log('7');
     resolve();
+    console.log('7');
 }).then(function() {
     console.log('8')
 })
@@ -38,6 +38,9 @@ setTimeout(function() {
 
 
 // 1,7,6,8,2,4,3,5,9,11,10,12
+// 1,7,8,2,4,5,9,11,12
+// 1,7,8,2,4,5,9,11,12
+
 
 // 我们来分析一下
 
