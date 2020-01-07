@@ -99,9 +99,11 @@ Elem.prototype.html = function(val) {
 
 Elem.prototype.on = function(type, fn) {
     this.elem.addEventListener(type, fn)
+    return this
 }
 
 var elem = new Elem('head_wrapper')
 elem.html()
-// elem.html('<p>aaaaaaaaa</p>')
+elem.html('<p>aaaaaaaaa</p>')
 elem.on('click', function(event){console.log(event)})
+elem.html('<p>aaaaaaaaa</p>').on('click', function(event){console.log(event)}).html('<h3>bbbbbbbb</h3>')
