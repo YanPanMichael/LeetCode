@@ -83,3 +83,25 @@ obj.forEachAll(
       console.log(val)
   }
 )
+
+function Elem(id) {
+    this.elem = document.getElementById(id)
+}
+
+Elem.prototype.html = function(val) {
+    if(val) {
+        this.elem.innerHTML = val
+        return this
+    } else {
+        return this.elem.innerHTML
+    }
+}
+
+Elem.prototype.on = function(type, fn) {
+    this.elem.addEventListener(type, fn)
+}
+
+var elem = new Elem('head_wrapper')
+elem.html()
+// elem.html('<p>aaaaaaaaa</p>')
+elem.on('click', function(event){console.log(event)})
