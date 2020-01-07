@@ -11,7 +11,7 @@
   }
 })() //均为10
 
-// 使用let 块级作用域
+//使用let 块级作用域
 (function(){
   for (let i = 0; i < 10; i++) {
     var elem = document.createElement('a')
