@@ -5,19 +5,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+      html * {
+        margin: 0;
+        padding: 0;
+      }
       session.layout {
         display: flex;
+        flex-direction: column;
       }
-
+      session.layout article {
+        flex-grow: 1
+      }
+      session.layout article > div:first-child {
+        width: 200px;
+        float: left;
+        height: 100%;
+      }
+      session.layout article > div:nth-child(2) {
+        width: calc(100% - 200px);
+        float: right;
+        height: 100%;
+      }
+      session.layout .header-header {
+        height: 300px
+      }
+      session.layout .header-header .hh-logo {
+        background-color: green;
+      }
+      session.layout .header-header .hh-header {
+        background-color: red;
+      }
+      session.layout .cv-content ul li{
+        text-decoration: none;
+        list-style: none;
+        display: block;
+      }
     </style>
   </head>
   <body>
     <session class="flexpage layout">
-      <article>
-        
+      <article class="header-header">
+        <div class="hh-logo">Logo</div>
+        <div class="hh-header">Header</div>
       </article>
-      <article>
-        
+      <article class="content-body">
+        <div class="cb-menu">menu</div>
+        <div class="cv-content">
+          <ul>
+            <li>header</li>
+            <li>content</li>
+          </ul>
+        </div>
       </article>
     </session>
   </body>
