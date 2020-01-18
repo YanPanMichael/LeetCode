@@ -1,9 +1,9 @@
 function getUpper(arr, key){
 	//获取某个元素最后出现位置 
     var low = 0, high = arr.length - 1;
-    console.log(high);
+    // console.log(high);
     var mid = Math.round((low + high) / 2);
-    console.log(mid);
+    // console.log(mid);
     /*其实是一个递归迭代*/ 
     while(low <= high){
         if(arr[mid] <= key){
@@ -37,7 +37,7 @@ function getLower(arr,key){//获取某个元素第一次出现位置
 } 
  
 var arr = [0,1,1,2,2,2,2,4,4,4]; //测试数组 
-var key = 2;
+var key = 5;
 var higher = getUpper(arr,key);
 var lower = getLower(arr,key);
-console.log(higher-lower+1);
+console.log(higher-lower+1); // 0个重复的元素
