@@ -37,17 +37,22 @@ function Person(name, age) {
 
 var actor = myNew(Person, 'Tom', 28)
 
-// 
-function bind(content) {
-  if(content == null) throw
+// Bind
+function myBind() {
+  var content = arguments[0] || window
+  if(content == null) throw new Error('first argument error')
 
-  let that = this;
-  return function F() {
-    if (this)
-    that.call(content, arguments)
+  var that = this;
+  var args = Array.prototype.slice.call(arguments, 1)
+  var F = function() {
+    var args_2 = Array.prototype.slice.call(arguments, 0)
+    return that.apply(this instanceof Function ? this : content, args.concat(args_2))
   }
+  F.prototype = Object.create(this.prototype)
+  return F;
 }
 
+// Apply
 function myApply(content, arr) {
   content = content || window
   content.__fn__ = this;
@@ -63,10 +68,9 @@ function myApply(content, arr) {
     delete content.__fn__
     return redult;
   }
-
-
 }
 
+// Call
 function myCall() {
   let args = Array.prototype.slice.call(arguments)
   let content = args.shift()
