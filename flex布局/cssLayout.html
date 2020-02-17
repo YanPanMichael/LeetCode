@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+    html * {
+      margin: 0;
+      padding: 0;
+    }
+    .layout article div {
+      min-height: 100px;
+    }
+    .layout {
+      margin-top: 20px;
+    }
+    </style>
+  </head>
+  <body>
+    <session class="layout float">
+      <style>
+        .float .left-right-center .left {
+          float: left;
+          width: 300px;
+          background-color: red;
+        }
+        .float .left-right-center .right {
+          float: right;
+          width: 300px;
+          background-color: green;
+        }
+        .float .left-right-center .center {
+          background-color: yellow;
+        }
+      </style>
+      <article class="left-right-center">
+        <div class="left"></div>
+        <div class="right"></div>
+        <div class="center">
+          <p>aaa</p>
+        </div>
+      </article>
+    </session>
+
+    <session class="layout absolute">
+      <style>
+        .absolute .left-right-center>div {
+          position: absolute;
+        }
+        .absolute .left-right-center .left {
+          left: 0;
+          width: 300px;
+          background-color: red;
+        }
+        .absolute .left-right-center .center {
+          left: 300px;
+          right: 300px;
+          background-color: yellow;
+        }
+        .absolute .left-right-center .right {
+          right: 0;
+          width: 300px;
+          background-color: green;
+        }
+      </style>
+      <article class="left-right-center">
+        <div class="left"></div>
+        <div class="right"></div>
+        <div class="center">
+          <p>bbb</p>
+        </div>
+      </article>
+    </session>
+
+    <session class="layout flexbox">
+      <style>
+        .flexbox .left-right-center {
+          margin-top: 120px;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+        }
+        .flexbox .left-right-center .left {
+          flex: 0 0 300px;
+          background-color: red;
+        }
+        .flexbox .left-right-center .right {
+          flex: 0 0 300px;
+          background-color: green;
+        }
+        .flexbox .left-right-center .center {
+          flex: 1;
+          background-color: yellow;
+        }
+      </style>
+      <article class="left-right-center">
+        <div class="left"></div>
+        <div class="center">ccc</div>
+        <div class="right"></div>
+      </article>
+    </session>
+
+    <session class="layout table">
+      <style>
+        .table .left-right-center {
+          display: table;
+          width: 100%;
+          height: 100px;
+        }
+        .table .left-right-center>div {
+          display: table-cell;
+        }
+        .table .left-right-center .left {
+          width: 300px;
+          background-color: red;
+        }
+        .table .left-right-center .right {
+          width: 300px;
+          background-color: green;
+        }
+        .table .left-right-center .center {
+          width: calc( 100% - 600px );
+          background-color: yellow;
+        }
+      </style>
+      <article class="left-right-center">
+        <div class="left"></div>
+        <div class="center">ddd</div>
+        <div class="right"></div>
+      </article>
+    </session>
+
+    <session class="layout grid">
+      <style>
+        .grid .left-right-center {
+          display: grid;
+          grid-template-rows: 100px;
+          grid-template-columns: 300px auto 300px;
+        }
+        .grid .left-right-center .left {
+          background-color: red;
+        }
+        .grid .left-right-center .right {
+          background-color: green;
+        }
+        .grid .left-right-center .center {
+          background-color: yellow;
+        }
+      </style>
+      <article class="left-right-center">
+        <div class="left"></div>
+        <div class="center">eee</div>
+        <div class="right"></div>
+      </article>
+    </session>
+
+    <session class="layout ul">
+      <style>
+        .ul .left-right-center {
+          list-style: none;
+        }
+        .ul .left-right-center>li {
+          display: inline-block;
+          height: 100px;
+        }
+        .ul .left-right-center .left {
+          background-color: red;
+          width: 300px;
+        }
+        .ul .left-right-center .right {
+          background-color: green;
+          width: 300px;
+        }
+        .ul .left-right-center .center {
+          background-color: yellow;
+          width: calc(100% - 611px);
+        }
+      </style>
+      <ul class="left-right-center">
+        <li class="left">asdf</li>
+        <li class="center">fff</li>
+        <li class="right">sdfgsdf xvas d</li>
+      </ul>
+    </session>
+  </body>
+</html>
