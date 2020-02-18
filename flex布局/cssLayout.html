@@ -9,6 +9,7 @@
       html * {
         margin: 0;
         padding: 0;
+        border: 0;
       }
       .layout article div {
         min-height: 100px;
@@ -184,6 +185,45 @@
         <li class="center">fff</li>
         <li class="right">sdfgsdf xvas d</li>
       </ul>
+    </session>
+
+    <session>
+      <article>
+        <style>
+          .mytable {
+            display: table;
+          }
+          .myrow {
+            display: table-row;
+          }
+          .mycell {
+            display: table-cell;
+          }
+          .column1 {
+            display: table-column;
+            background-color: green;
+          }
+          .column2 {
+            display: table-column;
+            background-color: #aaa;
+          }
+        </style>
+        <!-- table -->
+        <div class="mytable">
+          
+          <div class="column1"></div>
+          <div class="column2"></div>
+
+          <div class="myrow">
+            <div class="mycell">contents of first cell in row 1</div>
+            <div class="mycell">contents of second cell in row 1</div>
+          </div>
+          <div class="myrow">
+            <div class="mycell">contents of first cell in row 2</div>
+            <div class="mycell">contents of second cell in row 2</div>
+          </div>
+        </div>
+      </article>
     </session>
   </body>
 </html>
