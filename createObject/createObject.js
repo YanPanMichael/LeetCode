@@ -5,6 +5,8 @@ function myObjectCreate() {
     Object.create = function(content, props) {
       var F = function(){}
       F.prototype = content;
+      F.prototype.constructor = F
+      // F.prototype = Object.create(content.prototype)
       if(typeof props === 'object') {
         for(prop in props) { 
           if(props.hasOwnProperty(prop)) { 
@@ -78,7 +80,7 @@ function myCall() {
   content.__fn__ = this;
   var result = eval('content.__fn__('+ args.json(',') +')')
   delete content.__fn__
-  return redult
+  return result
 }
 
 function promise() {
@@ -104,6 +106,18 @@ function createStore(reducer) { // return store
   dispatch({})
   return {getState, subscribe, dispatch}
 }
+
+const combineReducers = reducers => {
+  return (state = {}, action) => {
+    return Object.keys(reducers).reduce(
+      (nextState, key) => {
+        nextState[key] = reducers[key](state[key], action);
+        return nextState;
+      },
+      {} 
+    );
+  };
+};
 
 //
 function Fun1() {
@@ -136,3 +150,32 @@ compose(Fun1, Fun2, Fun3, Fun4)('Tom', 21)
 // combineReducer
 
 // 
+
+function throttle(fn, delay) {
+  var timeout, remaining;
+  var previous = new Date();
+  
+  return function() {
+    var args = arguments,
+        context = this;
+        now = new Date(),
+        remaining = now - previous;
+
+    if(remaining >= delay) {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+      
+      fn.apply(context, args);
+      previous = now;
+    } else {
+      if(!timeout) {
+        timeout = setTimeout(() => {
+          fn.apply(context, args);
+          previous = new Date();       
+        }, delay - remaining);
+      }
+    }
+  }
+}
