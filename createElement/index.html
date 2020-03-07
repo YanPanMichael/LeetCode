@@ -88,6 +88,20 @@
       });
       return elem;
     }
+
+    function mycreateElement(type, props, children) {
+      if(!type) return null;
+      let elem = document.createElement(type);
+      for(key in props) {
+        if(props.hasOwnProperty(key)) {
+          elem.setAttribute(key, props[key])
+        }
+      }
+      Array.from(children).forEach(child => {
+        elem.appendChild(mycreateElement(child.tag, child.attrs, child.children))
+      })
+      return elem
+    }
   </script>
 </body>
 </html>
