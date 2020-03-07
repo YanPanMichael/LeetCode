@@ -23,9 +23,9 @@ function myNew() {
   // myNew(Func, ...agrs)
   var target = {};
   var args = Array.prototype.slice.call(arguments);
-  var constructor = Array.prototype.shift.call(args);
-  target.__proto__ = constructor.prototype;
-  var result = constructor.apply(target, args);
+  var Func = Array.prototype.shift.call(args); // Func是第一个参数，即构造函数
+  target.__proto__ = Func.prototype; // target.__proto__ = Object.create(Func.prototype)
+  var result = Func.apply(target, args);
   if (typeof result === "object" && result != null) {
     return result;
   } else {
@@ -89,6 +89,33 @@ function myCall() {
 
 function promise() {}
 
+function createElement(vnode) {
+  if (typeof vnode === "string") {
+    // let sNode = document.createElement("span");
+    // sNode.innerHTML = vnode;
+    // return sNode;
+    return document.createTextNode(vnode);
+  }
+  var tag = vnode.tag;
+  var attrs = vnode.attrs || {};
+  var children = vnode.children || [];
+  if (!tag) {
+    return null;
+  }
+  var elem = document.createElement(tag);
+  var attrName;
+  for (attrName in attrs) {
+    if (attrs.hasOwnProperty(attrName)) {
+      elem.setAttribute(attrName, attrs[attrName]);
+    }
+  }
+  !!children.length &&
+    children.forEach(child => {
+      elem.appendChild(createElement(child));
+    });
+  return elem;
+}
+
 function createStore(reducer) {
   // return store
   let state = {};
@@ -109,15 +136,6 @@ function createStore(reducer) {
   dispatch({});
   return { getState, subscribe, dispatch };
 }
-
-const combineReducers = reducers => {
-  return (state = {}, action) => {
-    return Object.keys(reducers).reduce((nextState, key) => {
-      nextState[key] = reducers[key](state[key], action);
-      return nextState;
-    }, {});
-  };
-};
 
 //
 function Fun1() {
@@ -143,9 +161,36 @@ function compose() {
   }
   return args.reduce((a, b) => (...args) => a(b(args)));
 }
-
 compose(Fun1, Fun2, Fun3, Fun4)("Tom", 21);
+//
+const combineReducers = reducers => {
+  return (state = {}, action) => {
+    return Object.keys(reducers).reduce((nextState, key) => {
+      nextState[key] = reducers[key](state[key], action);
+      return nextState;
+    }, {});
+  };
+};
+// next: 其实就是createStore
+export default function applyMiddleware(...middlewares) {
+  return (next) => (reducer, initialState) => {
+    var store = next(reducer, initialState)
+    var dispatch = store.dispatch
+    var chain = []
 
+    var middlewareAPI = {
+      getState: store.getState,
+      dispatch: (action) => dispatch(action)
+    }
+    chain = middlewares.map(middleware => middleware(middlewareAPI))
+    dispatch = compose(...chain)(store.dispatch)
+
+    return {
+      ...store,
+      dispatch // 实现新的dispatch方法
+    }
+  }
+}
 // throttle
 function throttle(fn, delay) {
   var timeout, remaining;
@@ -361,3 +406,78 @@ function getId() {
     )
     .catch(error => console.log(error));
 }
+
+var eve2;
+function create(event) {
+  window.eve = new Event("my_event");
+  eve2 = new CustomEvent("my_event_2", {
+    detail: [1, 2, 3]
+  }); // 属性名必须为 detail 不可更改
+  document.getElementById("trigger").addEventListener("my_event", function() {
+    console.log("my event callback");
+  });
+  document
+    .getElementById("trigger")
+    .addEventListener("my_event_2", function(e) {
+      console.log("my event 2 callback", e.detail);
+    });
+}
+function invoke(event) {
+  // window.dispatchEvent(window.eve);
+  event.currentTarget.dispatchEvent(window.eve);
+  event.currentTarget.dispatchEvent(eve2);
+}
+
+document.body.addEventListener("veb", function(e) {
+  alert(e.eventType);
+});
+var creatCustomEvent = document.createEvent("HTMLEvents");
+// initEvent接受3个参数：
+// 事件类型，是否冒泡，是否阻止浏览器的默认行为
+creatCustomEvent.initEvent("veb", false, true);
+//通过eventType传递事件信息
+creatCustomEvent.eventType = "I love Veblen";
+//触发document上绑定的click事件
+document.body.dispatchEvent(creatCustomEvent);
+
+
+export default function connect(mapStateToProps, mapDispatchToProps, mergeProps, options = {}) {
+  return function wrapWithConnect(WrappedComponent) {
+    class Connect extends Component {
+      constructor(props, context) {
+        // 从祖先Component处获得store
+        this.store = props.store || context.store
+        this.stateProps = computeStateProps(this.store, props)
+        this.dispatchProps = computeDispatchProps(this.store, props)
+        this.state = { storeState: null }
+        // 对stateProps、dispatchProps、parentProps进行合并
+        this.updateState()
+      }
+      shouldComponentUpdate(nextProps, nextState) {
+        // 进行判断，当数据发生改变时，Component重新渲染
+        if (propsChanged || mapStateProducedChange || dispatchPropsChanged) {
+          this.updateState(nextProps)
+            return true
+          }
+        }
+        componentDidMount() {
+          // 改变Component的state
+          this.store.subscribe(() = {
+            this.setState({
+              storeState: this.store.getState()
+            })
+          })
+        }
+        render() {
+          // 生成包裹组件Connect
+          return (
+            <WrappedComponent {...this.nextState} />
+          )
+        }
+      }
+      Connect.contextTypes = {
+        store: storeShape
+      }
+      return Connect;
+    }
+  }
