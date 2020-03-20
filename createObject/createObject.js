@@ -259,7 +259,7 @@ const myPromiseAll = function(promises) {
           data => {
             results[i] = data;
             if (++index === promises.length) {
-              resolve(result);
+              resolve(results);
             }
           },
           err => {
@@ -481,3 +481,112 @@ export default function connect(mapStateToProps, mapDispatchToProps, mergeProps,
       return Connect;
     }
   }
+
+
+  function ReverseClick(timePeriod) {
+    if(!(typeof timePeriod === 'number')) return Promise.resolve(0)
+return new Promise((resolve, reject) => {
+        let total = timePeriod || 0;
+    if(!!total) {
+        let timer;
+        for(let i=total; i>0; i--){
+           function(current){
+               let t1 = new Date();
+               if(timer) {
+                   clearTimeout(timer)
+                   timer = null
+               }
+              timer = setTimeout(() => {
+                  let t2 = new Data();
+                  let period = t2 - t1;
+               if(period > 1000) {
+                   
+               }
+                  console.log('time left: '+current)
+              },1000)
+              if(curent === 0) {
+                  resolve()
+              }
+            }(i)
+        }
+    }
+                   })
+   
+}
+
+ReverseClick().then(() => {})
+
+
+// id p_date 
+// 1 2017/08/29 00:10:10  
+// 2 2017/08/29 01:10:10 
+// 3 2017/08/29 01:10:10 
+// 4 2017/08/29 02:10:10 
+// 5 2017/08/29 01:10:10
+
+// 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
+
+// 你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。
+
+// 示例:
+
+// 给定 nums = [2, 7, 11, 15], target = 9
+
+// 因为 nums[0] + nums[1] = 2 + 7 = 9
+// 所以返回 [0, 1]
+
+function findMatch(inputArray, target) {
+  if(!(inputArray instanceof Array) || inputArray.length) return [];
+  let keyMap = {};
+  for(let i=0;i<inputArray.length;i++){
+      keyMap[inputArray[i]]=i;
+  }
+  Object.keys(keyMap).forEach((key) => {
+      let otherNum = target - key;
+      if(keyMap[otherNum] != null) {
+          return [keyMap[key], keyMap[otherNum]]
+      }
+  })
+  return [];
+}
+
+Object.prototype.a = 'Object';
+Function.prototype.a = 'Function';
+function Person(){};         
+var child = new Person();
+console.log(Person.a);
+console.log(child.a);
+
+// css文件为什么使用 href 来加载而 js文件需要使用 src 属性来加载？
+// img
+// iframe
+
+// 计算N!结果末尾有几个连续的0
+
+function iterator(inputNumber) {
+	if(!(typeof inputNumber !== 'number')) {
+		throw new Error('input type error!');
+	}
+	if(inputNumber === 1) return 1;
+	return inputNumber * iterator(inputNumber - 1);
+}
+
+function iteratorImprove(inputNumber, sum) {
+	if(!(typeof inputNumber !== 'number')) {
+		throw new Error('input type error!');
+	}
+	if(inputNumber === 0) return 0;
+	if(inputNumber === 1) return sum;
+	let total = inputNumber * sum;
+	return iterator(inputNumber - 1, total);
+}
+
+function findLastZeroNumber() {
+	let result = iteratorImprove(5, 1);
+	let zeroNumber = 0;
+	while(!!result && result%10 === 0) {
+		result = Number.parseInt(result/10);
+		zeroNumber++;
+	}
+	return zeroNumber;
+ }
