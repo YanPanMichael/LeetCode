@@ -173,23 +173,23 @@ const combineReducers = reducers => {
 };
 // next: 其实就是createStore
 export default function applyMiddleware(...middlewares) {
-  return (next) => (reducer, initialState) => {
-    var store = next(reducer, initialState)
-    var dispatch = store.dispatch
-    var chain = []
+  return next => (reducer, initialState) => {
+    var store = next(reducer, initialState);
+    var dispatch = store.dispatch;
+    var chain = [];
 
     var middlewareAPI = {
       getState: store.getState,
-      dispatch: (action) => dispatch(action)
-    }
-    chain = middlewares.map(middleware => middleware(middlewareAPI))
-    dispatch = compose(...chain)(store.dispatch)
+      dispatch: action => dispatch(action)
+    };
+    chain = middlewares.map(middleware => middleware(middlewareAPI));
+    dispatch = compose(...chain)(store.dispatch);
 
     return {
       ...store,
       dispatch // 实现新的dispatch方法
-    }
-  }
+    };
+  };
 }
 // throttle
 function throttle(fn, delay) {
@@ -299,7 +299,6 @@ const pj = new Promise((resolve, reject) => {
   reject("error");
 });
 pj.then(null, err => console.log(err));
-
 
 // ajax
 function ajax(url, method, body) {
@@ -440,88 +439,86 @@ creatCustomEvent.eventType = "I love Veblen";
 //触发document上绑定的click事件
 document.body.dispatchEvent(creatCustomEvent);
 
-
-export default function connect(mapStateToProps, mapDispatchToProps, mergeProps, options = {}) {
+export default function connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps,
+  options = {}
+) {
   return function wrapWithConnect(WrappedComponent) {
     class Connect extends Component {
       constructor(props, context) {
         // 从祖先Component处获得store
-        this.store = props.store || context.store
-        this.stateProps = computeStateProps(this.store, props)
-        this.dispatchProps = computeDispatchProps(this.store, props)
-        this.state = { storeState: null }
+        this.store = props.store || context.store;
+        this.stateProps = computeStateProps(this.store, props);
+        this.dispatchProps = computeDispatchProps(this.store, props);
+        this.state = { storeState: null };
         // 对stateProps、dispatchProps、parentProps进行合并
-        this.updateState()
+        this.updateState();
       }
       shouldComponentUpdate(nextProps, nextState) {
         // 进行判断，当数据发生改变时，Component重新渲染
         if (propsChanged || mapStateProducedChange || dispatchPropsChanged) {
-          this.updateState(nextProps)
-            return true
-          }
-        }
-        componentDidMount() {
-          // 改变Component的state
-          this.store.subscribe(() = {
-            this.setState({
-              storeState: this.store.getState()
-            })
-          })
-        }
-        render() {
-          // 生成包裹组件Connect
-          return (
-            <WrappedComponent {...this.nextState} />
-          )
+          this.updateState(nextProps);
+          return true;
         }
       }
-      Connect.contextTypes = {
-        store: storeShape
+      componentDidMount() {
+        // 改变Component的state
+        this.store.subscribe(() => {
+          this.setState({
+            storeState: this.store.getState()
+          });
+        });
       }
-      return Connect;
+      render() {
+        // 生成包裹组件Connect
+        return <WrappedComponent {...this.nextState} />;
+      }
     }
-  }
-
-
-  function ReverseClick(timePeriod) {
-    if(!(typeof timePeriod === 'number')) return Promise.resolve(0)
-return new Promise((resolve, reject) => {
-        let total = timePeriod || 0;
-    if(!!total) {
-        let timer;
-        for(let i=total; i>0; i--){
-           function(current){
-               let t1 = new Date();
-               if(timer) {
-                   clearTimeout(timer)
-                   timer = null
-               }
-              timer = setTimeout(() => {
-                  let t2 = new Data();
-                  let period = t2 - t1;
-               if(period > 1000) {
-                   
-               }
-                  console.log('time left: '+current)
-              },1000)
-              if(curent === 0) {
-                  resolve()
-              }
-            }(i)
-        }
-    }
-                   })
-   
+    Connect.contextTypes = {
+      store: storeShape
+    };
+    return Connect;
+  };
 }
 
-ReverseClick().then(() => {})
+function ReverseClick(timePeriod) {
+  if (!(typeof timePeriod === "number")) return Promise.resolve(0);
+  return new Promise((resolve, reject) => {
+    let total = timePeriod || 0;
+    if (!!total) {
+      let timer;
+      for (let i = total; i > 0; i--) {
+        (function(current) {
+          let t1 = new Date();
+          if (timer) {
+            clearTimeout(timer);
+            timer = null;
+          }
+          timer = setTimeout(() => {
+            let t2 = new Data();
+            let period = t2 - t1;
+            if (period > 1000) {
+            }
+            console.log("time left: " + current);
+          }, 1000);
+          if (curent === 0) {
+            resolve();
+          }
+        })(i);
+      }
+    }
+  });
+}
 
+ReverseClick().then(() => {});
 
-// id p_date 
-// 1 2017/08/29 00:10:10  
-// 2 2017/08/29 01:10:10 
-// 3 2017/08/29 01:10:10 
-// 4 2017/08/29 02:10:10 
+// id p_date
+// 1 2017/08/29 00:10:10
+// 2 2017/08/29 01:10:10
+// 3 2017/08/29 01:10:10
+// 4 2017/08/29 02:10:10
 // 5 2017/08/29 01:10:10
 
 // 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
@@ -536,23 +533,24 @@ ReverseClick().then(() => {})
 // 所以返回 [0, 1]
 
 function findMatch(inputArray, target) {
-  if(!(inputArray instanceof Array) || inputArray.length) return [];
+  if (!(inputArray instanceof Array) || inputArray.length) return [];
   let keyMap = {};
-  for(let i=0;i<inputArray.length;i++){
-      keyMap[inputArray[i]]=i;
+  for (let i = 0; i < inputArray.length; i++) {
+    keyMap[inputArray[i]] = i;
   }
-  Object.keys(keyMap).forEach((key) => {
-      let otherNum = target - key;
-      if(keyMap[otherNum] != null) {
-          return [keyMap[key], keyMap[otherNum]]
-      }
-  })
+  Object.keys(keyMap).forEach(key => {
+    let otherNum = target - key;
+    if (keyMap[otherNum] != null) {
+      return [keyMap[key], keyMap[otherNum]];
+    }
+  });
   return [];
 }
 
-Object.prototype.a = 'Object';
-Function.prototype.a = 'Function';
-function Person(){};         
+Object.prototype.a = "Object";
+Function.prototype.a = "Function";
+function Person() {}
+
 var child = new Person();
 console.log(Person.a);
 console.log(child.a);
@@ -561,32 +559,4 @@ console.log(child.a);
 // img
 // iframe
 
-// 计算N!结果末尾有几个连续的0
 
-function iterator(inputNumber) {
-	if(!(typeof inputNumber !== 'number')) {
-		throw new Error('input type error!');
-	}
-	if(inputNumber === 1) return 1;
-	return inputNumber * iterator(inputNumber - 1);
-}
-
-function iteratorImprove(inputNumber, sum) {
-	if(!(typeof inputNumber !== 'number')) {
-		throw new Error('input type error!');
-	}
-	if(inputNumber === 0) return 0;
-	if(inputNumber === 1) return sum;
-	let total = inputNumber * sum;
-	return iterator(inputNumber - 1, total);
-}
-
-function findLastZeroNumber() {
-	let result = iteratorImprove(5, 1);
-	let zeroNumber = 0;
-	while(!!result && result%10 === 0) {
-		result = Number.parseInt(result/10);
-		zeroNumber++;
-	}
-	return zeroNumber;
- }
