@@ -559,4 +559,53 @@ console.log(child.a);
 // img
 // iframe
 
+// 计算N!结果末尾有几个连续的0
+
+function iterator(inputNumber) {
+  if (!(typeof inputNumber !== "number")) {
+    throw new Error("input type error!");
+  }
+  if (inputNumber === 1) return 1;
+  return inputNumber * iterator(inputNumber - 1);
+}
+
+function iteratorImprove(inputNumber, sum) {
+  if (!(typeof inputNumber !== "number")) {
+    throw new Error("input type error!");
+  }
+  if (inputNumber === 0) return 0;
+  if (inputNumber === 1) return sum;
+  let total = inputNumber * sum;
+  return iteratorImprove(inputNumber - 1, total);
+}
+
+function findLastZeroNumber() {
+  let result = iteratorImprove(5, 1);
+  let zeroNumber = 0;
+  while (!!result && result % 10 === 0) {
+    result = Number.parseInt(result / 10);
+    zeroNumber++;
+  }
+  return zeroNumber;
+}
+
+//input [1,2,3]
+//output [[1,3,2],...]
+let result = [];
+
+function expandArray(inputArray) {
+  if (!(inputArray instanceof Array)) throw new Error("input must be array");
+  if (inputArray.length <= 1) return inputArray;
+
+  let list = [];
+  let first = 0;
+  let second = first + 1;
+  let temp = first;
+  list.push(inputArray[temp + (1 % inputArray.length)]);
+
+  return list.concat(inputArray[first], [
+    ...expandArray(Array.slice(inputArray[second]))
+  ]);
+}
+
 
